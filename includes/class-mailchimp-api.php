@@ -9,7 +9,7 @@ class CF7_MailChimp_API {
         $this->list_id = get_option('cf7_mc_list_id');
     }
 
-    public function add_subscriber($email, $first_name, $phone, $tags = []) {
+    public function add_subscriber($email, $first_name, $phone, $fecha, $tags = []) {
         if (!$this->api_key || !$this->list_id) {
             error_log('MailChimp API Error: Falta la API Key o el ID de la lista.');
             return false;
@@ -20,10 +20,11 @@ class CF7_MailChimp_API {
     
         $data = [
             'email_address' => $email,
-            'status' => 'subscribed',
+            'status'        => 'subscribed',
             'merge_fields'  => [
                 'FNAME' => $first_name,
-                'MMERGE4' => $phone
+                'PHONE' => $phone,
+                'DATE'  => $fecha
             ],
             'tags'          => $tags
         ];
@@ -49,8 +50,7 @@ class CF7_MailChimp_API {
         error_log("MailChimp API - Código de respuesta: $response_code");
         error_log("MailChimp API - Respuesta de MailChimp: " . $response_body);
         
-    
-        if (is_wp_error($response) || $response_code != 200) {
+        if ($response_code != 200) {
             error_log('MailChimp API - Error en la solicitud: ' . print_r($response_body, true));
         }
     
