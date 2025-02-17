@@ -22,9 +22,9 @@ class CF7_MailChimp_API {
             'email_address' => $email,
             'status'        => 'subscribed',
             'merge_fields'  => [
-                'FNAME' => $first_name,
-                'PHONE' => $phone,
-                'DATE'  => $fecha
+                'FNAME'  => $first_name,
+                'MMERGE4' => $phone,
+                'MMERGE3' => $fecha
             ],
             'tags'          => $tags
         ];
